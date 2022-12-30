@@ -2,6 +2,7 @@ package com.garanti.FirstSpringWeb.repo;
 
 import com.garanti.FirstSpringWeb.Constants;
 import com.garanti.FirstSpringWeb.model.Ders;
+import org.springframework.http.HttpStatus;
 
 import java.sql.*;
 import java.util.ArrayList;

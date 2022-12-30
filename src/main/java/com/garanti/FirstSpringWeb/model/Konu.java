@@ -1,43 +1,17 @@
 package com.garanti.FirstSpringWeb.model;
 
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Konu
 {
     private Integer ID;
 
     // aman dikkat repoda boş gelmesin
+    @NonNull
     private String NAME;
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public String getNAME() {
-        return NAME;
-    }
-
-    public void setNAME (String NAME) {
-        this.NAME = NAME;
-    }
-
-    public Konu(Integer ID, String NAME)
-    {
-        this.ID = ID;
-        this.NAME = NAME;
-    }
-
-    public Konu(String NAME)
-    {
-        this.NAME = NAME;
-    }
-
-    public Konu () {
-    }
-
-    @Override
-    public String toString() {
-        return "Konu{" +
-                "ID=" + ID +
-                ", NAME='" + NAME + '\'' +
-                '}';
-    }
 }

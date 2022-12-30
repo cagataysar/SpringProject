@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-// Read-only (sağ altta)
+// This file made Read-only.
 public final class Constants
 {
     private static final String USER = "BILGE";

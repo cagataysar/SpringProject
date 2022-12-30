@@ -1,52 +1,30 @@
 package com.garanti.FirstSpringWeb.controller;
 
+import com.garanti.FirstSpringWeb.model.Konu;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
-import com.garanti.FirstSpringWeb.repo.OgretmenRepo;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Configuration;
+import com.garanti.FirstSpringWeb.repo.KonuRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-/**
- * Bu anotasyonlar class'ların başına yazılır ve bu class'ın
- * bean yapılarak hafızaya atılmasını sağlar.
- * @Controller
- * @RestController
- * @Component
- * @Configuration
- * @Service
- * @Repository
- *
- * import org.springframework.stereotype; sınıfından gelir.
- */
-
-// localhost:9090/FirstSpringWeb/ogretmen
 @RestController
-@RequestMapping(path = "ogretmen")
-public class OgretmenController
+@RequestMapping(path = "konu")
+public class KonuController
 {
-    private OgretmenRepo repo;
+    private KonuRepo repo;
 
-    public OgretmenController()
-    {
-        this.repo = new OgretmenRepo();
+    public KonuController() {
+        this.repo = new KonuRepo();
     }
 
-    @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList< Ogretmen >> getAll()
+    @GetMapping (path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity< ArrayList< Konu > > getAll()
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/getAll
-        ArrayList<Ogretmen> res = repo.getAll();
+        // localhost:9090/FirstSpringWeb/konu/getAll
+        ArrayList<Konu> res = repo.getAll();
         if ( res == null ||res.size() == 0 ) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -56,10 +34,10 @@ public class OgretmenController
     }
 
     @GetMapping(path = "getByIdHeader", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Ogretmen> getByIdHeader(@RequestHeader (name = "id") Integer id)
+    public ResponseEntity<Konu> getByIdHeader(@RequestHeader (name = "id") Integer id)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/getById?id=1
-        Ogretmen res = repo.getById(id);
+        // localhost:9090/FirstSpringWeb/konu/getById?id=1
+        Konu res = repo.getById(id);
         if ( res != null ) {
             return ResponseEntity.ok(res);
         }
@@ -69,10 +47,10 @@ public class OgretmenController
     }
 
     @GetMapping(path = "getById", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Ogretmen> getByIdQueryParam(@RequestParam (value = "id", required = true) Integer id)
+    public ResponseEntity<Konu> getByIdQueryParam(@RequestParam (value = "id", required = true) Integer id)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/getById?id=1
-        Ogretmen res = repo.getById(id);
+        // localhost:9090/FirstSpringWeb/konu/getById?id=1
+        Konu res = repo.getById(id);
         if ( res != null ) {
             return ResponseEntity.ok(res);
         }
@@ -82,13 +60,13 @@ public class OgretmenController
     }
 
     @GetMapping(path = "getById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Ogretmen> getByIdPathParam(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Konu> getByIdPathParam(@PathVariable(value = "id") Integer id)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/getById/1
+        // localhost:9090/FirstSpringWeb/konu/getById/1
         //bütün parametreleri vermek zorundayız
         //consume restful servisin dışardan alacağı data türünü belirtir
         //produce web servisin dışarıya vereceği türü belirtir
-        Ogretmen res = repo.getById(id);
+        Konu res = repo.getById(id);
         if ( res != null ) {
             return ResponseEntity.ok(res);
         }
@@ -98,11 +76,11 @@ public class OgretmenController
     }
 
     @PostMapping(path = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> save(@RequestBody Ogretmen ogretmen)
+    public ResponseEntity<String> save(@RequestBody Konu konu)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/save
+        // localhost:9090/FirstSpringWeb/konu/save
         // {"name":"RestTest", "is_GICIK": true}
-        if (repo.save(ogretmen))
+        if (repo.save(konu))
         {
             return ResponseEntity.status(HttpStatus.CREATED).body("Başarı ile kaydedildi");
         }
@@ -115,7 +93,7 @@ public class OgretmenController
     @DeleteMapping(path = "deleteById/{id}")
     public ResponseEntity<String> deleteById(@PathVariable(value = "id") Integer id)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/deleteById/1
+        // localhost:9090/FirstSpringWeb/konu/deleteById/1
         if (repo.deleteById(id))
         {
             return ResponseEntity.ok("Başarı ile silindi");
@@ -129,7 +107,7 @@ public class OgretmenController
     @DeleteMapping(path = "deleteByIdHeader")
     public ResponseEntity<String> deleteByIdHeader(@RequestHeader(value = "id") Integer id)
     {
-        // localhost:9090/FirstSpringWeb/ogretmen/deleteById/1
+        // localhost:9090/FirstSpringWeb/konu/deleteById/1
         if (repo.deleteById(id))
         {
             return ResponseEntity.ok("Başarı ile silindi");

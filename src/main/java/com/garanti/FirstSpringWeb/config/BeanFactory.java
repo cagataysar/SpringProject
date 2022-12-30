@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeanFactory
 {
-    public BeanFactory () {
+    /*public BeanFactory () {
         System.err.println("-------> BeanFactory new yapılıyor");
-    }
+    }*/
 
     @Bean(name = "person1")
     public PersonBean getPerson() {
