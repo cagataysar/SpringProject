@@ -1,5 +1,6 @@
 package com.garanti.FirstSpringWeb.controller;
 
+import com.garanti.FirstSpringWeb.BusinessException;
 import com.garanti.FirstSpringWeb.model.Ogrenci;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
 import com.garanti.FirstSpringWeb.repo.OgrenciRepo;
@@ -26,6 +27,9 @@ public class OgrenciController
     {
         // localhost:9090/FirstSpringWeb/ogrenci/getAll
         ArrayList< Ogrenci > res = repo.getAll();
+        /*if ( res.size() == 0 ) {
+            throw new BusinessException("My Exception");
+        }*/
         if ( res == null || res.size() == 0 ) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
