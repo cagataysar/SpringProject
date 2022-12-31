@@ -1,1 +1,1 @@
-# A simple Spring Project that I made during a Java bootcamp.
+# A simple Spring Project that I made while a Java bootcamp.

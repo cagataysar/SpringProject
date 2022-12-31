@@ -1,8 +1,10 @@
 package com.garanti.FirstSpringWeb.controller;
 
+import com.garanti.FirstSpringWeb.BusinessException;
 import com.garanti.FirstSpringWeb.model.Ders;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
 import com.garanti.FirstSpringWeb.repo.DersRepo;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,17 @@ public class DersController
     public DersController() {
         this.repo = new DersRepo();
     }
-
-    public ResponseEntity< ArrayList<Ders>  > getAll() {
+    @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<Ders>> getAll()
+    {
+        // localhost:9090/FirstRestfulService/ogretmen/getAll
         ArrayList<Ders> res = repo.getAll();
-        if ( res != null ||res.size() == 0 ) {
+        if (res == null || res.size() == 0)
+        {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        else {
+        else
+        {
             return ResponseEntity.ok(res);
         }
     }

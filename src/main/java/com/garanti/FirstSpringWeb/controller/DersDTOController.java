@@ -20,7 +20,7 @@ public class DersDTOController
         this.repo = new DersDTORepo();
     }
 
-    @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity< ArrayList< DersDTO > > getAll() {
         // localhost:9090/FirstSpringWeb/dersdto/getAll
         ArrayList<DersDTO> res = repo.getAll();
@@ -30,13 +30,12 @@ public class DersDTOController
         else {
             return ResponseEntity.ok(res);
         }
-    }
+    }*/
 
-    @PostMapping (path = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PostMapping (path = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> save(@RequestBody DersDTO dersDTO)
     {
         // localhost:9090/FirstSpringWeb/dersdto/save
-        // {"name":"RestTest", "is_GICIK": true}
         if (repo.save(dersDTO))
         {
             return ResponseEntity.status(HttpStatus.CREATED).body("Başarı ile kaydedildi");
@@ -45,5 +44,5 @@ public class DersDTOController
         {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Başarı ile kaydedildi");
         }
-    }
+    }*/
 }

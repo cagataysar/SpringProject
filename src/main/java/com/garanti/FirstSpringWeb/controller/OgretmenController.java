@@ -104,11 +104,11 @@ public class OgretmenController
         // {"name":"RestTest", "is_GICIK": true}
         if (repo.save(ogretmen))
         {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Başarı ile kaydedildi");
+            return ResponseEntity.status(HttpStatus.CREATED).body(ogretmen.getNAME() + " isimli öğretmen başarıyla eklendi");
         }
         else
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Başarı ile kaydedildi");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ogretmen.getNAME() + " isimli öğretmen eklenemedi");
         }
     }
 

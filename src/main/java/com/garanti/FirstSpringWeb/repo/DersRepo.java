@@ -1,5 +1,6 @@
 package com.garanti.FirstSpringWeb.repo;
 
+import com.garanti.FirstSpringWeb.BusinessException;
 import com.garanti.FirstSpringWeb.Constants;
 import com.garanti.FirstSpringWeb.model.Ders;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class DersRepo {
             }
             catch (SQLException e)
             {
-                // throw new mybussinessexception()
+//                throw new BusinessException();
             }
         }
         return liste;
@@ -133,6 +134,7 @@ public class DersRepo {
         {
             System.err.println("-> " + e.getClass().getName());
             System.err.println(e.getMessage());
+            // kendi exception sınıfımı yazmak istersem nasıl yazabilirim
         }
         catch (Exception e)
         {
