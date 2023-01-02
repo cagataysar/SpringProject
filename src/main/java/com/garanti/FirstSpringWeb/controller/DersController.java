@@ -2,6 +2,7 @@ package com.garanti.FirstSpringWeb.controller;
 
 import com.garanti.FirstSpringWeb.BusinessException;
 import com.garanti.FirstSpringWeb.model.Ders;
+import com.garanti.FirstSpringWeb.model.DersDTO;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
 import com.garanti.FirstSpringWeb.repo.DersRepo;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +25,7 @@ public class DersController
     @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Ders>> getAll()
     {
-        // localhost:9090/FirstRestfulService/ogretmen/getAll
+        // localhost:9090/FirstRestfulService/ders/getAll
         ArrayList<Ders> res = repo.getAll();
         if (res == null || res.size() == 0)
         {

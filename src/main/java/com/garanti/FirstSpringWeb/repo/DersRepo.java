@@ -1,16 +1,15 @@
 package com.garanti.FirstSpringWeb.repo;
 
-import com.garanti.FirstSpringWeb.BusinessException;
 import com.garanti.FirstSpringWeb.Constants;
 import com.garanti.FirstSpringWeb.model.Ders;
-import org.springframework.http.HttpStatus;
+import com.garanti.FirstSpringWeb.model.DersDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DersRepo {
 
-    public ArrayList<Ders> getAll()
+    public ArrayList< Ders > getAll()
     {
         ArrayList<Ders> liste = new ArrayList<>();
         Connection connection = null;
@@ -47,6 +46,7 @@ public class DersRepo {
         }
         return liste;
     }
+
 
     public Ders getById(int id)
     {
