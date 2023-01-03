@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "ders")
@@ -19,14 +20,14 @@ public class DersController
 {
     private DersRepo repo;
 
-    public DersController() {
-        this.repo = new DersRepo();
+    public DersController(DersRepo repo) {
+        this.repo = repo;
     }
     @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Ders>> getAll()
+    public ResponseEntity<List<Ders>> getAll()
     {
         // localhost:9090/FirstRestfulService/ders/getAll
-        ArrayList<Ders> res = repo.getAll();
+        List<Ders> res = repo.getAll();
         if (res == null || res.size() == 0)
         {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

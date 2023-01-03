@@ -7,11 +7,11 @@ import java.sql.SQLException;
 // This file made Read-only.
 public final class Constants
 {
-    private static final String USER = "BILGE";
+    public static final String USER = "BILGE";
 
-    private static final String PASSWORD = "12345";
+    public static final String PASSWORD = "12345";
 
-    private static final String URL = "jdbc:oracle:thin:@localhost:1521";
+    public static final String URL = "jdbc:oracle:thin:@localhost:1521";
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         // gerekebilir

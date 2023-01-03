@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "ogrenci")
@@ -18,15 +19,15 @@ public class OgrenciController
 {
     private OgrenciRepo repo;
 
-    public OgrenciController() {
-        this.repo = new OgrenciRepo();
+    public OgrenciController(OgrenciRepo repo) {
+        this.repo = repo;
     }
 
     @GetMapping (path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity< ArrayList< Ogrenci > > getAll()
+    public ResponseEntity< List< Ogrenci > > getAll()
     {
         // localhost:9090/FirstSpringWeb/ogrenci/getAll
-        ArrayList< Ogrenci > res = repo.getAll();
+        List< Ogrenci > res = repo.getAll();
         /*if ( res.size() == 0 ) {
             throw new BusinessException("My Exception");
         }*/
@@ -36,6 +37,13 @@ public class OgrenciController
         else {
             return ResponseEntity.ok(res);
         }
+    }
+
+    @GetMapping(path = "findAllByName", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Ogrenci>> getByIdQueryParam(@RequestParam(value = "name", required = true) String name)
+    {
+        // localhost:9090/FirstSpringWeb/ogrenci/findAllByName?name=a
+        return ResponseEntity.ok(this.repo.getAllLike(name));
     }
 
     @GetMapping(path = "getByIdHeader", produces = MediaType.APPLICATION_JSON_VALUE)

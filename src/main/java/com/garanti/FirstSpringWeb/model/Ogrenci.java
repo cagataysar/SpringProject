@@ -17,6 +17,5 @@ public class Ogrenci
     @NonNull
     private int OGR_NUMBER;
 
-    @NonNull
     private Integer YEAR;
 }

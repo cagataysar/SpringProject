@@ -3,6 +3,7 @@ package com.garanti.FirstSpringWeb.controller;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
 import com.garanti.FirstSpringWeb.repo.OgretmenRepo;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Bu anotasyonlar class'ların başına yazılır ve bu class'ın
@@ -35,24 +37,41 @@ import java.util.Arrays;
 @RequestMapping(path = "ogretmen")
 public class OgretmenController
 {
+    /**
+     * OgretmenRepo sınıfının başına @Repository yazdık.
+     * @Autowired biz OgretmenRepo'yu new yapmayalım diye @Repository ile buluyor
+     * ve new yapıyor.
+     */
+    // Dependency injection
+//    @Autowired // required özelliğini dene iki repodan autowired almaya çalışsın mesela
     private OgretmenRepo repo;
 
-    public OgretmenController()
+    public OgretmenController(OgretmenRepo repo)
     {
-        this.repo = new OgretmenRepo();
+        // @Autowired yerine bu şekilde constructor injection yapılabilir.
+        // this.repo = new OgretmenRepo(); // yazmak yerine dışardan yani app context ten geliyor
+        // Bu kullanımda OgretmenRepo private olmalı.
+        this.repo = repo;
     }
 
     @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList< Ogretmen >> getAll()
+    public ResponseEntity<List< Ogretmen >> getAll()
     {
         // localhost:9090/FirstSpringWeb/ogretmen/getAll
-        ArrayList<Ogretmen> res = repo.getAll();
+        List<Ogretmen> res = repo.getAll();
         if ( res == null ||res.size() == 0 ) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         else {
             return ResponseEntity.ok(res);
         }
+    }
+
+    @GetMapping(path = "findAllByName", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Ogretmen>> getByIdQueryParam(@RequestParam(value = "name", required = true) String name)
+    {
+        // localhost:9090/FirstSpringWeb/ogretmen/findAllByName?name=a
+        return ResponseEntity.ok(this.repo.getAllLike(name));
     }
 
     @GetMapping(path = "getByIdHeader", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -111,6 +130,8 @@ public class OgretmenController
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ogretmen.getNAME() + " isimli öğretmen eklenemedi");
         }
     }
+
+    // delete metodunda 403 forbidden nasıl çalışır
 
     @DeleteMapping(path = "deleteById/{id}")
     public ResponseEntity<String> deleteById(@PathVariable(value = "id") Integer id)

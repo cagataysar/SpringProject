@@ -2,150 +2,54 @@ package com.garanti.FirstSpringWeb.repo;
 
 import com.garanti.FirstSpringWeb.Constants;
 import com.garanti.FirstSpringWeb.model.Konu;
+import com.garanti.FirstSpringWeb.model.Ogretmen;
+import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class KonuRepo {
-    public  ArrayList<Konu> getAll()
+@Repository
+@AllArgsConstructor
+public class KonuRepo
+{
+    private JdbcTemplate jdbcTemplate;
+
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public List<Konu> getAll()
     {
-        ArrayList<Konu> liste = new ArrayList<>();
-        Connection connection = null;
-        Statement stmt = null;
-        ResultSet result = null;
-
-        try {
-            connection = Constants.getConnection();
-            stmt = connection.createStatement();
-            result = stmt.executeQuery("select * from BILGE.KONU");
-            while (result.next())
-            {
-                Konu temp = new Konu(result.getInt("ID"), result.getString("NAME"));
-                liste.add(temp);
-            }
-        }
-        catch (Exception e)
-        {
-            liste.clear();
-        }
-        finally
-        {
-            try {
-                result.close();
-                stmt.close();
-                connection.close();
-            }
-            catch (SQLException ex)
-            {
-                // throw new mybussinessexception()
-            }
-
-        }
-        return liste;
+        String sql = "select * from BILGE.KONU";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Konu.class));
     }
 
     public Konu getById(int id)
     {
-        Konu konu = null;
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        ResultSet result = null;
-        try
-        {
-            connection =Constants.getConnection();
-            stmt = connection.prepareStatement("select * from BILGE.KONU where ID = ?");
-            stmt.setInt(1,id);
-            result = stmt.executeQuery();
-            while (result.next())
-            {
-                konu = new Konu(result.getInt("ID"), result.getString("NAME"));
-            }
-        }
-        catch (Exception e)
-        {
-            System.err.println(e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                result.close();
-                stmt.close();
-                connection.close();
-            }
-            catch (SQLException e)
-            {
-                // throw new mybussinessexception()
-            }
-        }
-        return konu;
+        String sql = "select * from BILGE.KONU where ID = :ID";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ID", id);
+        return namedParameterJdbcTemplate.queryForObject(sql, paramMap, BeanPropertyRowMapper.newInstance(Konu.class));
     }
 
     public boolean deleteById(int id)
     {
-        boolean result = false;
-        Connection connection = null;
-        PreparedStatement stmt = null;
-
-        try
-        {
-            connection = Constants.getConnection();
-            stmt = connection.prepareStatement("delete from BILGE.KONU where ID = ?");
-            stmt.setInt(1, id);
-            result = stmt.executeUpdate() == 1;
-        }
-        catch (Exception e)
-        {
-            System.err.println(e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                stmt.close();
-                connection.close();
-            }
-            catch (SQLException e)
-            {
-            }
-        }
-        return result;
+        String sql = "delete from BILGE.KONU where ID = :ID";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ID", id);
+        return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
     }
 
     public boolean save(Konu konu)
     {
-        boolean result = false;
-//      kargo 7253
-        Connection connection = null;
-        PreparedStatement stmt = null;
-        try
-        {
-            connection = Constants.getConnection();
-            stmt = connection.prepareStatement("Insert into BILGE.KONU (NAME) values (?)");
-            stmt.setString(1, konu.getNAME());
-            result = stmt.executeUpdate() == 1;
-        }
-        catch (SQLException e)
-        {
-            System.err.println("-> " + e.getClass().getName());
-            System.err.println(e.getMessage());
-        }
-        catch (Exception e)
-        {
-            System.err.println("-> " + e.getClass().getName());
-        }
-        finally
-        {
-            try
-            {
-                stmt.close();
-                connection.close();
-            }
-            catch (Exception e)
-            {
-            }
-        }
-        return result;
+        String sql = "Insert into BILGE.KONU (NAME) values (:NAME)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("NAME", konu.getNAME());
+        return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
     }
-
 }

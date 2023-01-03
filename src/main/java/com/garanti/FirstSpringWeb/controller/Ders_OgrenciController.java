@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "dersogrenci")
@@ -16,12 +17,13 @@ public class Ders_OgrenciController
 {
     private Ders_OgrenciRepo repo;
 
-    public Ders_OgrenciController() {
-        this.repo = new Ders_OgrenciRepo();
+    public Ders_OgrenciController(Ders_OgrenciRepo repo) {
+        this.repo = repo;
     }
 
-    public ResponseEntity< ArrayList< Ders_Ogrenci > > getAll() {
-        ArrayList< Ders_Ogrenci > res = repo.getAll();
+    @GetMapping(path = "getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity< List< Ders_Ogrenci > > getAll() {
+        List< Ders_Ogrenci > res = repo.getAll();
         if ( res != null ||res.size() == 0 ) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
