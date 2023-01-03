@@ -1,6 +1,7 @@
 package com.garanti.FirstSpringWeb.controller;
 
 import com.garanti.FirstSpringWeb.model.Konu;
+import com.garanti.FirstSpringWeb.model.Ogrenci;
 import com.garanti.FirstSpringWeb.model.Ogretmen;
 import com.garanti.FirstSpringWeb.repo.KonuRepo;
 import org.springframework.http.HttpStatus;
@@ -116,6 +117,20 @@ public class KonuController
         else
         {
             return ResponseEntity.internalServerError().body("Başarı ile silinemedi");
+        }
+    }
+
+    @PostMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody Konu konu) {
+//        localhost:9090/FirstSpringWeb/konu/update
+//        {"id":16, "name": "React"}
+        if (repo.update(konu))
+        {
+            return ResponseEntity.status(HttpStatus.CREATED).body(konu.getNAME() + " isimli konu başarıyla güncellendi");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(konu.getNAME() + " isimli konu güncellenemedi");
         }
     }
 }

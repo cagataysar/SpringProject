@@ -130,4 +130,18 @@ public class OgrenciController
             return ResponseEntity.internalServerError().body("Başarı ile silinemedi");
         }
     }
+
+    @PostMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody Ogrenci ogrenci) {
+//        localhost:9090/FirstSpringWeb/ogrenci/update
+//        {"id":16, "name": "Mahmut"}
+        if (repo.update(ogrenci))
+        {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ogrenci.getNAME() + " isimli öğrenci başarıyla güncellendi");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ogrenci.getNAME() + " isimli öğrenci güncellenemedi");
+        }
+    }
 }

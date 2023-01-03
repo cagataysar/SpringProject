@@ -64,4 +64,12 @@ public class OgrenciRepo
         paramMap.put("NAME","%" + name + "%");
         return namedParameterJdbcTemplate.query(sql, paramMap, BeanPropertyRowMapper.newInstance(Ogrenci.class));
     }
+
+    public boolean update(Ogrenci ogrenci) {
+        String sql = "update OGRENCI set NAME = :NAME where ID = :ID";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ID",ogrenci.getID());
+        paramMap.put("NAME",ogrenci.getNAME());
+        return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
+    }
 }

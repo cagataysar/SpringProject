@@ -52,4 +52,12 @@ public class KonuRepo
         paramMap.put("NAME", konu.getNAME());
         return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
     }
+
+    public boolean update(Konu konu) {
+        String sql = "update KONU set NAME = :NAME where ID = :ID";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ID",konu.getID());
+        paramMap.put("NAME",konu.getNAME());
+        return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
+    }
 }

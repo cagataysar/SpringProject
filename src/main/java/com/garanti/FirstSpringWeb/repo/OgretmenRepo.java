@@ -101,4 +101,12 @@ public class OgretmenRepo
         paramMap.put("NAME", "%" + name + "%");
         return namedParameterJdbcTemplate.query(sql, paramMap, BeanPropertyRowMapper.newInstance(Ogretmen.class));
     }
+
+    public boolean update(Ogretmen ogretmen) {
+        String sql = "update OGRETMEN set NAME = :NAME where ID = :ID";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ID",ogretmen.getID());
+        paramMap.put("NAME",ogretmen.getNAME());
+        return namedParameterJdbcTemplate.update(sql, paramMap) == 1;
+    }
 }

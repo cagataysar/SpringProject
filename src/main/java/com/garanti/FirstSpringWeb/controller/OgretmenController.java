@@ -160,4 +160,18 @@ public class OgretmenController
             return ResponseEntity.internalServerError().body("Başarı ile silinemedi");
         }
     }
+
+    @PostMapping(path = "update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody Ogretmen ogretmen) {
+//        localhost:9090/FirstSpringWeb/ogretmen/update
+//        {"id":16, "name": "Mahmut"}
+        if (repo.update(ogretmen))
+        {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ogretmen.getNAME() + " isimli öğretmen başarıyla güncellendi");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ogretmen.getNAME() + " isimli öğretmen güncellenemedi");
+        }
+    }
 }
